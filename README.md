@@ -1,4 +1,4 @@
 echecs
 ======
 
-Yet another chess game
+Yet another chess game written in javascript
