@@ -1,0 +1,9 @@
+Functional:
+- basic board, black and white, no custom color
+- vs mode only, no AI involved
+- runnable on local user-agent, no server involved
+
+Technical:
+- javascript implementation
+- jQuery
+- html5
