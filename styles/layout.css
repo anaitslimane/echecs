@@ -1,0 +1,29 @@
+﻿@CHARSET "UTF-8";
+
+html, .layout
+{
+    height: 100%;
+}
+
+.layout
+{
+    background: #5E5E5E;
+    color: #404040;
+    position: relative;
+}
+
+.layout .main-wrapper
+{
+    margin: 20px auto;
+	width: 544px;
+	font-size: 100%;
+}
+
+.layout .content-wrapper
+{
+	padding: 20px 30px 50px;
+	border-radius: 10px;
+    box-shadow: 1px 1px 10px #CCCCCC;
+    background-color: #D6D6D6;
+    min-height: 350px;
+}
