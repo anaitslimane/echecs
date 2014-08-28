@@ -7,7 +7,7 @@ html, .layout
 
 .layout
 {
-    background: #5E5E5E;
+    background: #5E5E5E url("../imgs/bg.jpg");
     color: #404040;
     position: relative;
 }
@@ -15,7 +15,7 @@ html, .layout
 .layout .main-wrapper
 {
     margin: 20px auto;
-	width: 544px;
+	width: 656px;
 	font-size: 100%;
 }
 

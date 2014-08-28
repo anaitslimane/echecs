@@ -2,16 +2,11 @@
 
 #chessboard
 {
-    width: 100%;
+    width: 656px;
+    height: 656px;    
 }
 
-#chessboard td
-{
-    width: 64px;
-    height: 64px;
-}
-
-#chessboard .fair-colored-cell
+#chessboard .light-colored-cell
 {
     background-color: #ffffae;
     background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.5, rgba(255, 255, 255, .2)), color-stop(.5, transparent), to(transparent));
@@ -27,4 +22,45 @@
     background-image: -moz-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
     background-image: -o-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
     background-image: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+}
+
+#chessboard ul
+{
+    width: 656px;
+    height: 80px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    clear: left;
+}
+
+#chessboard .cell
+{
+    float: left;
+    min-width: 80px;
+    height: 80px;
+    text-align: center;
+    border: solid 1px #4a4a4a;
+}
+
+#chessboard .piece
+{
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+#chessboard .piece:hover
+{
+    cursor: pointer;
+}
+
+#chessboard .piece.black
+{
+    color: black;
+}
+
+#chessboard .piece.white
+{
+    color: white;
+    text-shadow: 1px 2px 4px #000;
 }
