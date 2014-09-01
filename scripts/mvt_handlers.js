@@ -26,7 +26,7 @@ echecs.mvt_handlers = {
     {
         var originCellID = echecs.utils.get_id_cell_containing(game, game.IDpieceSelected);
 
-        echecs.utils.bind_piece_to_cell(game, game.IDpieceSelected, destinationCellID);
+        echecs.utils.slide_piece(echecs.constants.SLIDE_OPTIONS.move);
 
         // now that we moved, the cell should be reset to its original state
         echecs.utils.reset_cell(game.chessboard.cells[originCellID]);

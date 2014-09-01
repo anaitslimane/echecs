@@ -18,5 +18,11 @@ echecs.constants = {
     {
         white : "white",
         black : "black"
+    },
+
+    SLIDE_OPTIONS : 
+    {
+        move: "move",
+        capture: "capture"
     }
 };

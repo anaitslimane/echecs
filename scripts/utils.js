@@ -223,6 +223,11 @@ echecs.utils = {
         cell.isEmpty = false;
     },
 
+    slide_piece: function (game, pieceID, cell)
+    {
+
+    },
+
     build_piece_name : function(name, color, pieceIndex)
     {
         if (typeof pieceIndex === 'undefined')
