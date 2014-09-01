@@ -104,7 +104,19 @@ echecs.models = {
     Knight: function (pieceID, type, color)
     {
         echecs.models.Piece.call(this, pieceID, type, color);
-        this.movements = [];
+        
+        this.movements = [
+            echecs.mvt_rules.LShapeNNE,
+            echecs.mvt_rules.LShapeENE,
+            echecs.mvt_rules.LShapeESE,
+            echecs.mvt_rules.LShapeSSE,
+            echecs.mvt_rules.LShapeSSO,
+            echecs.mvt_rules.LShapeOSO,
+            echecs.mvt_rules.LShapeONO,
+            echecs.mvt_rules.LShapeNNO
+        ];
+
+        this.captures = this.movements;
     },
 
     Bishop: function (pieceID, type, color)

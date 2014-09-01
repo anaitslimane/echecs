@@ -60,6 +60,78 @@ echecs.mvt_rules = {
             var Yindex = (color == echecs.constants.COLORS.white) ? Ycurr - 1 : Ycurr + 1;
 
             return echecs.utils.build_cell_id(Xindex - 1, Yindex);
+        },
+
+        // L shape north north east 
+        LShapeNNE: function (color, Xcurr, Ycurr)
+        {
+            var Xindex = (color == echecs.constants.COLORS.white) ? Xcurr + 1 : Xcurr - 1;
+            var Yindex = (color == echecs.constants.COLORS.white) ? Ycurr + 2 : Ycurr - 2;
+
+            return echecs.utils.build_cell_id(Xindex - 1, Yindex);
+        },
+
+        // L shape east north east 
+        LShapeENE: function (color, Xcurr, Ycurr)
+        {
+            var Xindex = (color == echecs.constants.COLORS.white) ? Xcurr + 2 : Xcurr - 2;
+            var Yindex = (color == echecs.constants.COLORS.white) ? Ycurr + 1 : Ycurr - 1;
+
+            return echecs.utils.build_cell_id(Xindex - 1, Yindex);
+        },
+
+        // L shape east south east 
+        LShapeESE: function (color, Xcurr, Ycurr)
+        {
+            var Xindex = (color == echecs.constants.COLORS.white) ? Xcurr + 2 : Xcurr - 2;
+            var Yindex = (color == echecs.constants.COLORS.white) ? Ycurr - 1 : Ycurr + 1;
+
+            return echecs.utils.build_cell_id(Xindex - 1, Yindex);
+        },
+
+        // L shape south south east 
+        LShapeSSE: function (color, Xcurr, Ycurr)
+        {
+            var Xindex = (color == echecs.constants.COLORS.white) ? Xcurr + 1 : Xcurr - 1;
+            var Yindex = (color == echecs.constants.COLORS.white) ? Ycurr - 2 : Ycurr + 2;
+
+            return echecs.utils.build_cell_id(Xindex - 1, Yindex);
+        },
+
+        // L shape south south ouest 
+        LShapeSSO: function (color, Xcurr, Ycurr)
+        {
+            var Xindex = (color == echecs.constants.COLORS.white) ? Xcurr - 1 : Xcurr + 1;
+            var Yindex = (color == echecs.constants.COLORS.white) ? Ycurr - 2 : Ycurr + 2;
+
+            return echecs.utils.build_cell_id(Xindex - 1, Yindex);
+        },
+
+        // L shape ouest south ouest 
+        LShapeOSO: function (color, Xcurr, Ycurr)
+        {
+            var Xindex = (color == echecs.constants.COLORS.white) ? Xcurr - 2 : Xcurr + 2;
+            var Yindex = (color == echecs.constants.COLORS.white) ? Ycurr - 1 : Ycurr + 1;
+
+            return echecs.utils.build_cell_id(Xindex - 1, Yindex);
+        },
+
+        // L shape ouest north ouest 
+        LShapeONO: function (color, Xcurr, Ycurr)
+        {
+            var Xindex = (color == echecs.constants.COLORS.white) ? Xcurr - 2 : Xcurr + 2;
+            var Yindex = (color == echecs.constants.COLORS.white) ? Ycurr + 1 : Ycurr - 1;
+
+            return echecs.utils.build_cell_id(Xindex - 1, Yindex);
+        },
+
+        // L shape north north ouest 
+        LShapeNNO: function (color, Xcurr, Ycurr)
+        {
+            var Xindex = (color == echecs.constants.COLORS.white) ? Xcurr - 1 : Xcurr + 1;
+            var Yindex = (color == echecs.constants.COLORS.white) ? Ycurr + 2 : Ycurr - 2;
+
+            return echecs.utils.build_cell_id(Xindex - 1, Yindex);
         }
 
 };

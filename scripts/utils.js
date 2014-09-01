@@ -205,27 +205,18 @@ echecs.utils = {
         return echecs.constants.COLUMN_LETTERS[iCol] + iRow;
     },
 
-    bind_piece_to_cell: function (game, pieceID, cellID)
+    bind_piece_to_cell: function (game, pieceID, destinationCellID)
     {
-        var cell = game.chessboard.cells[cellID];
+        var cell = game.chessboard.cells[destinationCellID];
 
         if (game.movesCount == 0)
         {
             cell.visible_instance.append(game.pieces[pieceID].visible_instance);
         }
-        else
-        {
-            this.slide_piece(game, pieceID, cell);
-        }
 
-        game.pieces[pieceID].idHostCell = cellID;
+        game.pieces[pieceID].idHostCell = destinationCellID;
         cell.idPieceContained = pieceID;
         cell.isEmpty = false;
-    },
-
-    slide_piece: function (game, pieceID, cell)
-    {
-
     },
 
     build_piece_name : function(name, color, pieceIndex)
@@ -239,9 +230,10 @@ echecs.utils = {
     /**
      * slide the piece from a cell to another
      */
-    slide_piece: function (game, pieceID, cell)
+    slide_piece: function (game, pieceID, destinationCellID, originAction)
     {
-        cell.visible_instance.append(game.pieces[pieceID].visible_instance);
+        echecs.utils.bind_piece_to_cell(game, pieceID, destinationCellID);
+        game.chessboard.cells[destinationCellID].visible_instance.append(game.pieces[pieceID].visible_instance);
     },
 
     /**
