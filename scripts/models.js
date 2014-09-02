@@ -110,10 +110,10 @@ echecs.models = {
             echecs.mvt_rules.LShapeENE,
             echecs.mvt_rules.LShapeESE,
             echecs.mvt_rules.LShapeSSE,
-            echecs.mvt_rules.LShapeSSO,
-            echecs.mvt_rules.LShapeOSO,
-            echecs.mvt_rules.LShapeONO,
-            echecs.mvt_rules.LShapeNNO
+            echecs.mvt_rules.LShapeSSW,
+            echecs.mvt_rules.LShapeWSW,
+            echecs.mvt_rules.LShapeWNW,
+            echecs.mvt_rules.LShapeNNW
         ];
 
         this.captures = this.movements;
