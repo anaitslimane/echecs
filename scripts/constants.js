@@ -2,7 +2,7 @@
 
 echecs.constants = {
 
-    COLUMN_LETTERS : ["a", "b", "c", "d", "e", "f", "g", "h"],
+    COLUMN_LETTERS : ["0", "a", "b", "c", "d", "e", "f", "g", "h"],
 
     PIECE_TYPES:
     {

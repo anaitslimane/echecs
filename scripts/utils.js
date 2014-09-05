@@ -24,24 +24,28 @@ echecs.utils = {
         game.toPlayColor = echecs.constants.COLORS.white;
         game.movesCount = 0;
         
-        $(".main-wrapper").append("<table id='chessboard'></table>");
+        $(".main-wrapper").append("<ul id='chessboard'></ul>");
 
-        for (iRow = 8; iRow > 0; iRow--)
+        for (var iRow = 8; iRow > 0; iRow--)
         {
-            var localRow = $("<ul></ul>");
-            $("#chessboard").append(localRow);
+            var $localRowContainer = $("<li></li>");
+            var $localRow = $("<ul></ul>");
 
-            for (iCol = 0; iCol < 8; iCol++)
+            $("#chessboard").append($localRowContainer);
+            $localRowContainer.append($localRow);
+
+            // index from 1 to 8
+            for (var iCol = 1; iCol < 9; iCol++)
             {
-                var localCol = $("<li class='cell'></li>");
+                var $localCol = $("<li class='cell'></li>");
 
                 // id of the current cell
                 var idCurrentCell = this.build_cell_id(iCol, iRow);
             
-                localRow.append(localCol);
-                localCol.attr("id", idCurrentCell);
+                $localRow.append($localCol);
+                $localCol.attr("id", idCurrentCell);
 
-                game.chessboard.cells[idCurrentCell] = new echecs.models.Cell(idCurrentCell, true, iCol + 1, iRow, null);
+                game.chessboard.cells[idCurrentCell] = new echecs.models.Cell(idCurrentCell, true, iCol, iRow, null);
                 
                 switch(iRow)
                 {
@@ -49,28 +53,28 @@ echecs.utils = {
                     case 8:
                         switch(iCol)
                         {
-                            case 0:
+                            case 1:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.rook1B.pieceID, idCurrentCell);
                                 break;
-                            case 1:
+                            case 2:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.knight1B.pieceID, idCurrentCell);
                                 break;
-                            case 2:
+                            case 3:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.bishop1B.pieceID, idCurrentCell);
                                 break;
-                            case 3:
+                            case 4:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.queenB.pieceID, idCurrentCell);
                                 break;
-                            case 4:
+                            case 5:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.kingB.pieceID, idCurrentCell);
                                 break;
-                            case 5:
+                            case 6:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.bishop2B.pieceID, idCurrentCell);
                                 break;
-                            case 6:
+                            case 7:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.knight2B.pieceID, idCurrentCell);
                                 break;
-                            case 7:
+                            case 8:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.rook2B.pieceID, idCurrentCell);
                                 break;
                         }
@@ -80,28 +84,28 @@ echecs.utils = {
                     case 1:
                         switch (iCol)
                         {
-                            case 0:
+                            case 1:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.rook1W.pieceID, idCurrentCell);
                                 break;
-                            case 1:
+                            case 2:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.knight1W.pieceID, idCurrentCell);
                                 break;
-                            case 2:
+                            case 3:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.bishop1W.pieceID, idCurrentCell);
                                 break;
-                            case 3:
+                            case 4:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.queenW.pieceID, idCurrentCell);
                                 break;
-                            case 4:
+                            case 5:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.kingW.pieceID, idCurrentCell);
                                 break;
-                            case 5:
+                            case 6:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.bishop2W.pieceID, idCurrentCell);
                                 break;
-                            case 6:
+                            case 7:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.knight2W.pieceID, idCurrentCell);
                                 break;
-                            case 7:
+                            case 8:
                                 echecs.utils.bind_piece_to_cell(game, game.pieces.rook2W.pieceID, idCurrentCell);
                                 break;
                         }
@@ -112,33 +116,33 @@ echecs.utils = {
 
                     case 7:
                         //blacks
-                        var propName = "pawn" + (iCol + 1).toString() + "B";
+                        var propName = "pawn" + (iCol).toString() + "B";
                         echecs.utils.bind_piece_to_cell(game, game.pieces[propName].pieceID, idCurrentCell);
                         break;
 
                     case 2:
                         //whites
-                        var propName = "pawn" + (iCol + 1).toString() + "W";
+                        var propName = "pawn" + (iCol).toString() + "W";
                         echecs.utils.bind_piece_to_cell(game, game.pieces[propName].pieceID, idCurrentCell);
                         break;
                 }
 
-                if (iCol % 2 == 0)
+                if ((iCol + 1) % 2 == 0)
                 {
                     if (iRow % 2 == 0) {
-                        localCol.addClass(classLight);
+                        $localCol.addClass(classLight);
                     }
                     else {
-                        localCol.addClass(classDark);
+                        $localCol.addClass(classDark);
                     }
                 }
                 else
                 {
                     if (iRow % 2 == 0) {
-                        localCol.addClass(classDark);
+                        $localCol.addClass(classDark);
                     }
                     else {
-                        localCol.addClass(classLight);
+                        $localCol.addClass(classLight);
                     }
                 }
             }
@@ -158,19 +162,76 @@ echecs.utils = {
     {
         var piece = game.pieces[pieceID];
         var cellCurr = game.chessboard.cells[piece.idHostCell];
+        var pieceType = piece.type;
+
+        var populate_possible_host_cells = function (piece, cell)
+        {
+            for (var i = 0; i < piece.movements.length; i++)
+            {
+                var position = piece.movements[i].call(this, piece.color, cellCurr.Xindex, cellCurr.Yindex);
+
+                var idCellPossible = echecs.utils.build_cell_id(position.Xindex, position.Yindex);
+
+                if (game.chessboard.cells[idCellPossible]
+                    && game.chessboard.cells[idCellPossible].isEmpty)
+                {
+                    piece.idsPossibleMoveHostCells.push(idCellPossible);
+                }
+            }
+        }
 
         // reset the pieces's possible host cells
         this.reset_possible_host_cells(piece);
 
-        for (var i = 0; i < piece.movements.length; i++)
+        switch(pieceType)
         {
-            var idCellPossible = piece.movements[i].call(this, piece.color, cellCurr.Xindex, cellCurr.Yindex);
+            case echecs.constants.PIECE_TYPES.queen:
+            case echecs.constants.PIECE_TYPES.rook:
+            case echecs.constants.PIECE_TYPES.bishop:
+                for (var i = 0; i < piece.movements.length; i++)
+                {
+                    var positions = piece.movements[i].call(this, piece.color, cellCurr.Xindex, cellCurr.Yindex);
+                    
+                    for(positionKey in positions)
+                    {
+                        var idCellPossible = echecs.utils.build_cell_id(positions[positionKey].Xindex, positions[positionKey].Yindex);
+                        
+                        if (game.chessboard.cells[idCellPossible]
+                            && game.chessboard.cells[idCellPossible].isEmpty)
+                        {
+                            piece.idsPossibleMoveHostCells.push(idCellPossible);
+                        }
+                    }
+                }
+                break;
 
-            if (game.chessboard.cells[idCellPossible]
-                && game.chessboard.cells[idCellPossible].isEmpty)
-            {
-                piece.idsPossibleMoveHostCells.push(idCellPossible);
-            }
+            case echecs.constants.PIECE_TYPES.king:
+            case echecs.constants.PIECE_TYPES.knight:
+                populate_possible_host_cells(piece, cellCurr);
+                break;
+
+            case echecs.constants.PIECE_TYPES.pawn:
+                for (var i = 0; i < piece.movements.length; i++)
+                {
+                    if (piece.movements[i] == echecs.mvt_rules.upDouble)
+                    {
+                        if (cellCurr.Yindex !== 2 && cellCurr.Yindex !== 7)
+                        {
+                            continue;
+                        }
+                    }
+
+                    var position = piece.movements[i].call(this, piece.color, cellCurr.Xindex, cellCurr.Yindex);
+
+                    var idCellPossible = echecs.utils.build_cell_id(position.Xindex, position.Yindex);
+
+                    if (game.chessboard.cells[idCellPossible]
+                        && game.chessboard.cells[idCellPossible].isEmpty)
+                    {
+                        piece.idsPossibleMoveHostCells.push(idCellPossible);
+                    }
+                }
+                break;
         }
 
         for (var capt in piece.captures)
@@ -219,7 +280,7 @@ echecs.utils = {
         cell.isEmpty = false;
     },
 
-    build_piece_name : function(name, color, pieceIndex)
+    build_piece_name : function (name, color, pieceIndex)
     {
         if (typeof pieceIndex === 'undefined')
             pieceIndex = "";
@@ -343,5 +404,21 @@ echecs.utils = {
         echecs.utils.set_all_pieces_possible_hosts(game);
         game.toPlayColor = (game.toPlayColor == echecs.constants.COLORS.white) ? echecs.constants.COLORS.black : echecs.constants.COLORS.white;
         game.movesCount++;
+    },
+
+    // sets the currently selected piece's ID
+    set_currently_selected_pieceID: function (game, selectedPieceID)
+    {
+        if (selectedPieceID == null)
+        {
+            return;
+        }
+        else
+        {
+            $(".selected").removeClass("selected");
+            $("#" + selectedPieceID).parent().addClass("selected");
+        }
+        
+        game.IDpieceSelected = selectedPieceID;
     }
 };

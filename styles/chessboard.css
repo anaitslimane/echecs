@@ -1,34 +1,33 @@
 ﻿@CHARSET "UTF-8";
 
-#chessboard
+ul#chessboard
 {
     width: 656px;
-    height: 656px;    
+    height: 656px;
+    padding: 0;
+    margin: 0;
+    border: 30px solid #3b3b3b;
+    box-shadow: 1px 1px 30px black;
 }
 
 #chessboard .light-colored-cell
 {
     background-color: #ffffae;
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.5, rgba(255, 255, 255, .2)), color-stop(.5, transparent), to(transparent));
-    background-image: -moz-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
-    background-image: -o-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
-    background-image: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: url(/imgs/whites-bg.png);
+    background-repeat: repeat;
 }
 
 #chessboard .dark-colored-cell
 {
     background-color: #ae5f0c;
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.5, rgba(255, 255, 255, .2)), color-stop(.5, transparent), to(transparent));
-    background-image: -moz-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
-    background-image: -o-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
-    background-image: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: url(/imgs/blacks-bg.png);
+    background-repeat: repeat;
 }
 
 #chessboard ul
 {
     width: 656px;
-    height: 80px;
-    list-style: none;
+    height: 82px;
     margin: 0;
     padding: 0;
     clear: left;
@@ -40,7 +39,13 @@
     min-width: 80px;
     height: 80px;
     text-align: center;
-    border: solid 1px #4a4a4a;
+    border: solid 1px #444;
+}
+
+#chessboard .cell.selected
+{
+    box-shadow: 0 0 30px #3399ff;
+    opacity: 0.80;
 }
 
 #chessboard .piece
@@ -63,4 +68,40 @@
 {
     color: white;
     text-shadow: 1px 2px 4px #000;
+}
+
+#chessboard .piece.pawn
+{
+    margin-top: 11px;
+    width: 50px;
+}
+
+#chessboard .piece.bishop
+{
+    margin-top: 3px;
+    width: 70px;
+}
+
+#chessboard .piece.knight
+{
+    margin-top: 6px;
+    width: 62px;
+}
+
+#chessboard .piece.rook
+{
+    margin-top: 10px;
+    width: 55px;
+}
+
+#chessboard .piece.queen
+{
+    margin-top: 8px;
+    width: 78px;
+}
+
+#chessboard .piece.king
+{
+    margin-top: 2px;
+    width: 72px;
 }

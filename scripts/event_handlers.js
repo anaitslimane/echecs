@@ -7,7 +7,7 @@ echecs.event_handlers = {
         // if the piece belongs to the set that has the go to play
         if (echecs.utils.has_go_to_play(game, clickedPieceID))
         {
-            game.IDpieceSelected = clickedPieceID;
+            echecs.utils.set_currently_selected_pieceID(game, clickedPieceID);
         }
         else
         {
@@ -18,7 +18,7 @@ echecs.event_handlers = {
             }
 
             // reset currently selected piece
-            game.IDpieceSelected = null;
+            echecs.utils.set_currently_selected_pieceID(game, null);
         }
     },
 

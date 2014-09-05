@@ -39,12 +39,18 @@ echecs.models = {
         this.idPieceContained = idPieceContained;
     },
 
+    Position: function (Xindex, Yindex)
+    {
+        this.Xindex = Xindex;
+        this.Yindex = Yindex;
+    },
+
     Piece: function (pieceID, type, color)
     {
         this.type = type;
         this.pieceID = pieceID;
-        this.visible_instance = $("<div id='" + this.pieceID + "' class='piece " + type + " " + color + "'>" + this.pieceID + "</div>")
         this.color = color;
+        this.visible_instance = $("<img id='" + this.pieceID + "' class='piece " + type + " " + color + "' src='/imgs/pieces/" + this.type + this.color.charAt(0) + ".png'>")
         this.isCaptured = false;
         this.idHostCell;
         this.idsPossibleMoveHostCells = [];
@@ -74,14 +80,14 @@ echecs.models = {
         echecs.models.Piece.call(this, pieceID, type, color);
 
         this.movements = [
-            echecs.mvt_rules.up,
-            echecs.mvt_rules.down,
-            echecs.mvt_rules.left,
-            echecs.mvt_rules.right,
-            echecs.mvt_rules.upLeft,
-            echecs.mvt_rules.upRight,
-            echecs.mvt_rules.downLeft,
-            echecs.mvt_rules.downRight
+            echecs.mvt_rules.upRepeat,
+            echecs.mvt_rules.downRepeat,
+            echecs.mvt_rules.leftRepeat,
+            echecs.mvt_rules.rightRepeat,
+            echecs.mvt_rules.upLeftRepeat,
+            echecs.mvt_rules.upRightRepeat,
+            echecs.mvt_rules.downLeftRepeat,
+            echecs.mvt_rules.downRightRepeat
         ];
 
         this.captures = this.movements;
@@ -92,10 +98,10 @@ echecs.models = {
         echecs.models.Piece.call(this, pieceID, type, color);
         
         this.movements = [
-            echecs.mvt_rules.up,
-            echecs.mvt_rules.down,
-            echecs.mvt_rules.left,
-            echecs.mvt_rules.right
+            echecs.mvt_rules.upRepeat,
+            echecs.mvt_rules.downRepeat,
+            echecs.mvt_rules.leftRepeat,
+            echecs.mvt_rules.rightRepeat
         ];
 
         this.captures = this.movements;
@@ -124,10 +130,10 @@ echecs.models = {
         echecs.models.Piece.call(this, pieceID, type, color);
         
         this.movements = [
-            echecs.mvt_rules.upLeft,
-            echecs.mvt_rules.upRight,
-            echecs.mvt_rules.downLeft,
-            echecs.mvt_rules.downRight
+            echecs.mvt_rules.upLeftRepeat,
+            echecs.mvt_rules.upRightRepeat,
+            echecs.mvt_rules.downLeftRepeat,
+            echecs.mvt_rules.downRightRepeat
         ];
 
         this.captures = this.movements;
@@ -140,7 +146,8 @@ echecs.models = {
         var currPawn = this;
         
         this.movements = [
-            echecs.mvt_rules.up
+            echecs.mvt_rules.up,
+            echecs.mvt_rules.upDouble
         ];
 
         this.captures = [
