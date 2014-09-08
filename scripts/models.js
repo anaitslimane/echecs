@@ -15,6 +15,7 @@ echecs.models = {
         this.id;
         this.chessboard;
         this.pieces;
+        this.capturedPieces = {};
         this.dateTimeStart;
         this.dateTimeEnd;
         this.playerWinner;

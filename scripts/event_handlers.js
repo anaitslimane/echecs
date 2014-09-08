@@ -14,7 +14,7 @@ echecs.event_handlers = {
             // if we already selected a piece, we're trying to capture
             if (game.IDpieceSelected != null)
             {
-                echecs.mvt_handlers.tryCapture(game.IDpieceSelected, clickedPieceID)
+                echecs.mvt_handlers.tryCapture(game, clickedPieceID)
             }
 
             // reset currently selected piece
@@ -35,7 +35,7 @@ echecs.event_handlers = {
                 if (game.pieces[clickedCell.idPieceContained].color != game.toPlayColor)
                 {
                     var clickedPieceID = clickedCell.idPieceContained;
-                    echecs.mvt_handlers.tryCapture(game.IDpieceSelected, clickedPieceID);
+                    echecs.mvt_handlers.tryCapture(game, clickedPieceID);
                 }
             }
             else

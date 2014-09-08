@@ -164,7 +164,7 @@ echecs.utils = {
         var cellCurr = game.chessboard.cells[piece.idHostCell];
         var pieceType = piece.type;
 
-        var populate_possible_host_cells = function (piece, cell)
+        var populate_possible_host_cells = function (piece, cell, allowJump)
         {
             for (var i = 0; i < piece.movements.length; i++)
             {
@@ -172,16 +172,31 @@ echecs.utils = {
 
                 var idCellPossible = echecs.utils.build_cell_id(position.Xindex, position.Yindex);
 
-                if (game.chessboard.cells[idCellPossible]
-                    && game.chessboard.cells[idCellPossible].isEmpty)
+                if (game.chessboard.cells[idCellPossible])
                 {
-                    piece.idsPossibleMoveHostCells.push(idCellPossible);
+                    if (game.chessboard.cells[idCellPossible].isEmpty)
+                    {
+                        piece.idsPossibleMoveHostCells.push(idCellPossible);
+                    }
+                    else
+                    {
+                        if (game.pieces[game.chessboard.cells[idCellPossible].idPieceContained].color != piece.color)
+                        {
+                            piece.idsPossibleCaptureHostCells.push(idCellPossible);
+                        }
+
+                        if (allowJump === false)
+                        {
+                            // we've reached an obstacle, stop
+                            break;
+                        }
+                    }
                 }
             }
         }
 
         // reset the pieces's possible host cells
-        this.reset_possible_host_cells(piece);
+        this.flush_possible_host_cells(piece);
 
         switch(pieceType)
         {
@@ -196,18 +211,33 @@ echecs.utils = {
                     {
                         var idCellPossible = echecs.utils.build_cell_id(positions[positionKey].Xindex, positions[positionKey].Yindex);
                         
-                        if (game.chessboard.cells[idCellPossible]
-                            && game.chessboard.cells[idCellPossible].isEmpty)
+                        if (game.chessboard.cells[idCellPossible])
                         {
-                            piece.idsPossibleMoveHostCells.push(idCellPossible);
+                            if (game.chessboard.cells[idCellPossible].isEmpty)
+                            {
+                                piece.idsPossibleMoveHostCells.push(idCellPossible);
+                            }
+                            else
+                            {
+                                if (game.pieces[game.chessboard.cells[idCellPossible].idPieceContained].color != piece.color)
+                                {
+                                    piece.idsPossibleCaptureHostCells.push(idCellPossible);
+                                }
+                                
+                                // we've reached an obstacle, stop
+                                break;
+                            }
                         }
                     }
                 }
                 break;
 
             case echecs.constants.PIECE_TYPES.king:
+                populate_possible_host_cells(piece, cellCurr, false);
+                break;
+
             case echecs.constants.PIECE_TYPES.knight:
-                populate_possible_host_cells(piece, cellCurr);
+                populate_possible_host_cells(piece, cellCurr, true);
                 break;
 
             case echecs.constants.PIECE_TYPES.pawn:
@@ -225,18 +255,22 @@ echecs.utils = {
 
                     var idCellPossible = echecs.utils.build_cell_id(position.Xindex, position.Yindex);
 
-                    if (game.chessboard.cells[idCellPossible]
-                        && game.chessboard.cells[idCellPossible].isEmpty)
+                    if (game.chessboard.cells[idCellPossible])
                     {
-                        piece.idsPossibleMoveHostCells.push(idCellPossible);
+                        if (game.chessboard.cells[idCellPossible].isEmpty)
+                        {
+                            piece.idsPossibleMoveHostCells.push(idCellPossible);
+
+                            // populate capture host cells
+                        }
+                        else
+                        {
+                            // we've reached an obstacle, stop
+                            break;
+                        }
                     }
                 }
                 break;
-        }
-
-        for (var capt in piece.captures)
-        {
-            piece.idsPossibleCaptureHostCells.push(capt);
         }
     },
     
@@ -248,7 +282,7 @@ echecs.utils = {
         }
     },
 
-    reset_possible_host_cells: function (piece)
+    flush_possible_host_cells: function (piece)
     {
         while (piece.idsPossibleMoveHostCells.length > 0)
         {
@@ -280,6 +314,13 @@ echecs.utils = {
         cell.isEmpty = false;
     },
 
+    unbind_piece_from_chessboard : function(game, capturedPiece)
+    {
+        capturedPiece.visible_instance.remove();
+        game.capturedPieces[capturedPiece.pieceID] = capturedPiece;
+        delete game.pieces[capturedPiece.pieceID];
+    },
+
     build_piece_name : function (name, color, pieceIndex)
     {
         if (typeof pieceIndex === 'undefined')
@@ -293,7 +334,6 @@ echecs.utils = {
      */
     slide_piece: function (game, pieceID, destinationCellID, originAction)
     {
-        echecs.utils.bind_piece_to_cell(game, pieceID, destinationCellID);
         game.chessboard.cells[destinationCellID].visible_instance.append(game.pieces[pieceID].visible_instance);
     },
 
@@ -409,11 +449,7 @@ echecs.utils = {
     // sets the currently selected piece's ID
     set_currently_selected_pieceID: function (game, selectedPieceID)
     {
-        if (selectedPieceID == null)
-        {
-            return;
-        }
-        else
+        if (selectedPieceID != null)
         {
             $(".selected").removeClass("selected");
             $("#" + selectedPieceID).parent().addClass("selected");
