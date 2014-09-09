@@ -158,13 +158,12 @@ echecs.utils = {
      * Sets the currently possible cells where a piece can be moved to.
      * This includes capture
      */
-    set_piece_possible_host_cells: function (game, pieceID)
+    set_piece_possible_host_cells: function (game, piece)
     {
-        var piece = game.pieces[pieceID];
         var cellCurr = game.chessboard.cells[piece.idHostCell];
         var pieceType = piece.type;
 
-        var populate_possible_host_cells = function (piece, cell, allowJump)
+        var populate_possible_host_cells = function (piece, cell)
         {
             for (var i = 0; i < piece.movements.length; i++)
             {
@@ -183,12 +182,6 @@ echecs.utils = {
                         if (game.pieces[game.chessboard.cells[idCellPossible].idPieceContained].color != piece.color)
                         {
                             piece.idsPossibleCaptureHostCells.push(idCellPossible);
-                        }
-
-                        if (allowJump === false)
-                        {
-                            // we've reached an obstacle, stop
-                            break;
                         }
                     }
                 }
@@ -233,26 +226,27 @@ echecs.utils = {
                 break;
 
             case echecs.constants.PIECE_TYPES.king:
-                populate_possible_host_cells(piece, cellCurr, false);
+                populate_possible_host_cells(piece, cellCurr);
                 break;
 
             case echecs.constants.PIECE_TYPES.knight:
-                populate_possible_host_cells(piece, cellCurr, true);
+                populate_possible_host_cells(piece, cellCurr);
                 break;
 
             case echecs.constants.PIECE_TYPES.pawn:
                 for (var i = 0; i < piece.movements.length; i++)
                 {
+                    // allowing (or not) the double step for pawns
                     if (piece.movements[i] == echecs.mvt_rules.upDouble)
                     {
-                        if (cellCurr.Yindex !== 2 && cellCurr.Yindex !== 7)
+                        if ((cellCurr.Yindex !== 2 || piece.color !== echecs.constants.COLORS.white) &&
+                                (cellCurr.Yindex !== 7 || piece.color !== echecs.constants.COLORS.black))
                         {
                             continue;
                         }
                     }
 
                     var position = piece.movements[i].call(this, piece.color, cellCurr.Xindex, cellCurr.Yindex);
-
                     var idCellPossible = echecs.utils.build_cell_id(position.Xindex, position.Yindex);
 
                     if (game.chessboard.cells[idCellPossible])
@@ -260,13 +254,25 @@ echecs.utils = {
                         if (game.chessboard.cells[idCellPossible].isEmpty)
                         {
                             piece.idsPossibleMoveHostCells.push(idCellPossible);
-
-                            // populate capture host cells
                         }
                         else
                         {
                             // we've reached an obstacle, stop
                             break;
+                        }
+                    }
+                }
+
+                for (var i = 0; i < piece.captures.length; i++)
+                {
+                    var position = piece.captures[i].call(this, piece.color, cellCurr.Xindex, cellCurr.Yindex);
+                    var idCellPossible = echecs.utils.build_cell_id(position.Xindex, position.Yindex);
+
+                    if (game.chessboard.cells[idCellPossible])
+                    {
+                        if (!game.chessboard.cells[idCellPossible].isEmpty)
+                        {
+                            piece.idsPossibleCaptureHostCells.push(idCellPossible);
                         }
                     }
                 }
@@ -278,7 +284,7 @@ echecs.utils = {
     {
         for (var pieceID in game.pieces)
         {
-            this.set_piece_possible_host_cells(game, pieceID);
+            this.set_piece_possible_host_cells(game, game.pieces[pieceID]);
         }
     },
 
