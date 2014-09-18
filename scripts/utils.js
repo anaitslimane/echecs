@@ -2,6 +2,23 @@
 
 echecs.utils = {
 
+    start_new_game : function()
+    {
+        // initialize the game
+        window.game = echecs.utils.init_game();
+
+        $(".piece").on("click", function (e)
+        {
+            echecs.event_handlers.on_click_piece(window.game, $(this).attr("id"));
+            e.stopPropagation();
+        });
+
+        $(".cell").on("click", function ()
+        {
+            echecs.event_handlers.on_click_cell(window.game, $(this).attr("id"));
+        });
+    },
+
     /*
      * initializes game and board
      */
@@ -200,7 +217,7 @@ echecs.utils = {
                 {
                     var positions = piece.movements[i].call(this, piece.color, cellCurr.Xindex, cellCurr.Yindex);
                     
-                    for(positionKey in positions)
+                    for(var positionKey in positions)
                     {
                         var idCellPossible = echecs.utils.build_cell_id(positions[positionKey].Xindex, positions[positionKey].Yindex);
                         
@@ -369,7 +386,7 @@ echecs.utils = {
                 if (pieceType == echecs.constants.PIECE_TYPES.rook)
                 {
                     supRepeat = 3;
-                    for (i = 1; i < supRepeat; i++)
+                    for (var i = 1; i < supRepeat; i++)
                     {
                         pieceID = echecs.utils.build_piece_name(pieceType, color, i);
                         pieces[pieceID] = new echecs.models.Rook(pieceID, pieceType, color);
@@ -379,7 +396,7 @@ echecs.utils = {
                 if (pieceType == echecs.constants.PIECE_TYPES.knight)
                 {
                     supRepeat = 3;
-                    for (i = 1; i < supRepeat; i++)
+                    for (var i = 1; i < supRepeat; i++)
                     {
                         pieceID = echecs.utils.build_piece_name(pieceType, color, i);
                         pieces[pieceID] = new echecs.models.Knight(pieceID, pieceType, color);
@@ -389,7 +406,7 @@ echecs.utils = {
                 if (pieceType == echecs.constants.PIECE_TYPES.bishop)
                 {
                     supRepeat = 3;
-                    for (i = 1; i < supRepeat; i++)
+                    for (var i = 1; i < supRepeat; i++)
                     {
                         pieceID = echecs.utils.build_piece_name(pieceType, color, i);
                         pieces[pieceID] = new echecs.models.Bishop(pieceID, pieceType, color);
@@ -400,7 +417,7 @@ echecs.utils = {
                 if (pieceType == echecs.constants.PIECE_TYPES.pawn)
                 {
                     supRepeat = 9;
-                    for (i = 1; i < supRepeat; i++)
+                    for (var i = 1; i < supRepeat; i++)
                     {
                         pieceID = echecs.utils.build_piece_name(pieceType, color, i);
                         pieces[pieceID] = new echecs.models.Pawn(pieceID, pieceType, color);
@@ -462,5 +479,17 @@ echecs.utils = {
         }
         
         game.IDpieceSelected = selectedPieceID;
+    },
+
+    // clears all game's dom objects
+    clear_game: function (game)
+    {
+        $("#chessboard").remove();
+
+        for (var k in game)
+        {
+            delete game[k];
+        }
+        delete game;
     }
 };
