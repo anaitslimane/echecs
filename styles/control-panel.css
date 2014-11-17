@@ -1,0 +1,39 @@
+﻿#control-panel
+{
+    position: absolute;
+    top: 30px;
+    left: -280px;
+    width: 250px;
+}
+
+#announcement-area
+{
+    height: 280px;
+}
+
+.captured-pieces-bag
+{
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #767676;
+    border: 15px solid #3b3b3b;
+    padding: 5px;
+}
+
+.captured-pieces-bag .piece
+{
+    float: left;
+    height: 40px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+#white-captured
+{
+    background-color: #dddddd;
+}
+
+#black-captured
+{
+    background-color: #1a1a1a;
+}

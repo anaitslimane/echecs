@@ -16,15 +16,7 @@ html, .layout
     margin: 20px auto;
 	width: 716px;
     font-size: 100%;
-}
-
-.layout .content-wrapper
-{
-    padding: 20px 30px 50px;
-    border-radius: 10px;
-    box-shadow: 1px 1px 10px #CCCCCC;
-    background-color: #D6D6D6;
-    min-height: 350px;
+    position: relative;
 }
 
 .layout ul

@@ -41,7 +41,7 @@ echecs.utils = {
         game.toPlayColor = echecs.constants.COLORS.white;
         game.movesCount = 0;
         
-        $(".main-wrapper").append("<ul id='chessboard'></ul>");
+        $("#chessboard-wrapper").append("<ul id='chessboard'></ul>");
 
         for (var iRow = 8; iRow > 0; iRow--)
         {
@@ -337,9 +337,18 @@ echecs.utils = {
         cell.isEmpty = false;
     },
 
-    unbind_piece_from_chessboard : function(game, capturedPiece)
+    // handles a captured piece
+    process_captured_piece : function(game, capturedPiece)
     {
-        capturedPiece.visible_instance.remove();
+        if (capturedPiece.color == echecs.constants.COLORS.white)
+        {
+            capturedPiece.visible_instance.appendTo("#black-captured");
+        }
+        else
+        {
+            capturedPiece.visible_instance.appendTo("#white-captured");
+        }
+        
         game.capturedPieces[capturedPiece.pieceID] = capturedPiece;
         delete game.pieces[capturedPiece.pieceID];
     },
