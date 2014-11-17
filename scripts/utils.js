@@ -494,6 +494,7 @@ echecs.utils = {
     clear_game: function (game)
     {
         $("#chessboard").remove();
+        $(".captured-pieces-bag").empty();
 
         for (var k in game)
         {
