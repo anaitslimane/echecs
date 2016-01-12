@@ -46,7 +46,7 @@ echecs.event_handlers = {
         }
 
         // reset currently selected piece
-        game.IDpieceSelected = null;
+        echecs.utils.reset_currently_selected_piece(game);
     }
 
 };

@@ -10,6 +10,11 @@ echecs.action_handlers = {
         {
             this.capture(game, clickedPieceID);
         }
+        else
+        {
+            // reset currently selected piece
+            echecs.utils.reset_currently_selected_piece(game);
+        }
         console.log("trying to capture here! :" + game.IDpieceSelected + " to " + clickedPieceID);
     },
 
@@ -18,6 +23,11 @@ echecs.action_handlers = {
         if ((game.pieces[game.IDpieceSelected].idsPossibleMoveHostCells).indexOf(clickedCellID) !== -1)
         {
             this.move(game, clickedCellID);
+        }
+        else
+        {
+            // reset currently selected piece
+            echecs.utils.reset_currently_selected_piece(game);
         }
         console.log("trying to move here! from:" + clickedCellID + " to " + clickedCellID);
     },

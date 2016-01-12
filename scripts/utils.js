@@ -501,5 +501,11 @@ echecs.utils = {
             delete game[k];
         }
         delete game;
+    },
+
+    reset_currently_selected_piece(game)
+    {
+        $(".selected").removeClass("selected");
+        game.IDpieceSelected = null;
     }
 };
