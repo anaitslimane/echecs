@@ -68,57 +68,7 @@ echecs.mvt_rules = {
 
             return echecs.mvt_rules.up(color, pos.Xindex, pos.Yindex);
         },
-
-        /**
-         * returns the number of moves possible in a certain direction
-         */
-        get_limit_distance: function (direction, color, Xcurr, Ycurr)
-        {
-            var Xindex = Xcurr;
-            var Yindex = Ycurr;
-
-            switch (direction)
-            {
-                case 'up':
-                    Yindex = (color == echecs.constants.COLORS.white) ? 8 - Ycurr : Ycurr;
-                    break;
-
-                case 'upLeft':
-                    Xindex = (color == echecs.constants.COLORS.white) ? Xcurr : 8 - Xcurr;
-                    Yindex = (color == echecs.constants.COLORS.white) ? 8 - Ycurr : Ycurr;
-                    break;
-
-                case 'left':
-                    Xindex = (color == echecs.constants.COLORS.white) ? Xcurr : 8 - Xcurr;
-                    break;
-
-                case 'downLeft':
-                    Xindex = (color == echecs.constants.COLORS.white) ? Xcurr : 8 - Xcurr;
-                    Yindex = (color == echecs.constants.COLORS.white) ? Ycurr : 8 - Ycurr;
-                    break;
-
-                case 'down':
-                    Yindex = (color == echecs.constants.COLORS.white) ? Ycurr : 8 - Ycurr;
-                    break;
-
-                case 'downRight':
-                    Xindex = (color == echecs.constants.COLORS.white) ? 8 - Xcurr : Xcurr;
-                    Yindex = (color == echecs.constants.COLORS.white) ? Ycurr : 8 - Ycurr;
-                    break;
-
-                case 'right':
-                    Xindex = (color == echecs.constants.COLORS.white) ? 8 - Xcurr : Xcurr;
-                    break;
-
-                case 'upRight':
-                    Xindex = (color == echecs.constants.COLORS.white) ? 8 - Xcurr : Xcurr;
-                    Yindex = (color == echecs.constants.COLORS.white) ? 8 - Ycurr : Ycurr;
-                    break;
-            }
-
-            return Math.min(Xindex, Yindex);
-        },
-
+        
         upRepeat: function (color, Xcurr, Ycurr)
         {
             var positions = [];
@@ -134,7 +84,6 @@ echecs.mvt_rules = {
 
             return positions;
         },
-
 
         downRepeat: function (color, Xcurr, Ycurr)
         {
@@ -319,5 +268,4 @@ echecs.mvt_rules = {
 
             return new echecs.models.Position(Xindex , Yindex);
         }
-
 };
